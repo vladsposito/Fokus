@@ -5,6 +5,7 @@ const longoBt = document.querySelector(".app__card-button--longo")
 const startBt = document.querySelector(".app__card-primary-button")
 
 const bannerImg = document.querySelector(".app__image")
+const bannerTitle = document.querySelector(".app__title")
 
 const focoTime = 1500
 const curtoTime = 300
@@ -20,6 +21,8 @@ focoBt.addEventListener('click', () => {
     curtoBt.classList.remove("active")
     focoBt.classList.add("active")
     longoBt.classList.remove("active")
+    bannerTitle.innerHTML = `Otimize sua produtividade,<br />
+     <strong class="app__title-strong">mergulhe no que importa.</strong>`
 })
 
 curtoBt.addEventListener('click', () => {
@@ -27,6 +30,8 @@ curtoBt.addEventListener('click', () => {
     curtoBt.classList.add("active")
     focoBt.classList.remove("active")
     longoBt.classList.remove("active")
+    bannerTitle.innerHTML = `Que tal dar uma respirada?<br />
+     <strong class="app__title-strong">Faça uma pausa curta!</strong>`
 })
 
 longoBt.addEventListener('click', () => {
@@ -34,4 +39,6 @@ longoBt.addEventListener('click', () => {
     curtoBt.classList.remove("active")
     focoBt.classList.remove("active")
     longoBt.classList.add("active")
+    bannerTitle.innerHTML = `Hora de voltar à superfície.<br />
+    <strong class="app__title-strong">Faça uma pausa longa.</strong>`
 })
