@@ -5,9 +5,15 @@ const longoBt = document.querySelector(".app__card-button--longo")
 const startBt = document.querySelector(".app__card-primary-button")
 const botoes = document.querySelectorAll(".app__card-button") 
 //O querrySelectorAll pega mais de um elemnto, fazendo um array. Ou seja, a const botoes é uma array
+const inputMusic = document.querySelector(".toggle-checkbox")
 
 const bannerImg = document.querySelector(".app__image")
 const bannerTitle = document.querySelector(".app__title")
+
+const playAudio = new Audio("/sons/play.wav")
+const pauseAudio = new Audio("/sons/pause.mp3")
+const music = new Audio("/sons/luna-rise-part-one.mp3")
+music.loop = true
 
 const focoTime = 1500
 const curtoTime = 300
@@ -22,6 +28,14 @@ function switchContexto(contexto){ //A função esta removendo o "active de todo
     bannerImg.setAttribute("src", `/imagens/${contexto}.png`)
 }
 
+
+inputMusic.addEventListener("change", () => {
+    if(music.paused){
+        music.play()
+    }else{
+        music.pause()
+    }
+})
 
 focoBt.addEventListener('click', () => {
     switchContexto("foco")
