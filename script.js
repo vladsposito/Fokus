@@ -1,4 +1,5 @@
 const html = document.querySelector('html')
+
 const focoBt = document.querySelector(".app__card-button--foco")
 const curtoBt = document.querySelector(".app__card-button--curto")
 const longoBt = document.querySelector(".app__card-button--longo")
@@ -12,12 +13,13 @@ const bannerTitle = document.querySelector(".app__title")
 
 const playAudio = new Audio("/sons/play.wav")
 const pauseAudio = new Audio("/sons/pause.mp3")
+const beepAudio = new Audio("/sons/beep.mp3")
 const music = new Audio("/sons/luna-rise-part-one.mp3")
 music.loop = true
 
-const focoTime = 1500
-const curtoTime = 300
-const longoTime = 900
+
+let clockTime = 10
+let setIntervalId = null
 
 function switchContexto(contexto){ //A função esta removendo o "active de todos os botões", para depois ser colocada no botão usado.
     botoes.forEach(contexto => {  //Devo usar forEach porque se trata de um array. 
@@ -26,6 +28,33 @@ function switchContexto(contexto){ //A função esta removendo o "active de todo
 
     html.setAttribute('data-contexto', contexto)
     bannerImg.setAttribute("src", `/imagens/${contexto}.png`)
+}
+
+function clock(){
+    clockTime--
+    console.log(clockTime)
+
+    if(clockTime <= 0){
+        stopClock()
+        beepAudio.play()
+        clockTime = 10
+    }
+}
+
+function startAndPauseClock(){
+    if(setIntervalId){
+        pauseAudio.play()
+        stopClock()
+        return
+    }
+    setIntervalId = setInterval(clock, 1000)
+    playAudio.play()
+}
+
+
+function stopClock(){
+    clearInterval(setIntervalId)
+    setIntervalId = null
 }
 
 
@@ -50,4 +79,8 @@ curtoBt.addEventListener('click', () => {
 longoBt.addEventListener('click', () => {
     switchContexto("descanso-longo")
     longoBt.classList.add("active")
+})
+
+startBt.addEventListener("click", ()=>{
+    startAndPauseClock()
 })
