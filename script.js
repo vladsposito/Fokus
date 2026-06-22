@@ -10,27 +10,28 @@ const focoTime = 1500
 const curtoTime = 300
 const longoTime = 900
 
+function switchContexto(contexto){
+    html.setAttribute('data-contexto', contexto)
+    bannerImg.setAttribute("src", `/imagens/${contexto}.png`)
+}
 
 focoBt.addEventListener('click', () => {
-    html.setAttribute('data-contexto', "foco")
+    switchContexto("foco")
     curtoBt.classList.remove("active")
     focoBt.classList.add("active")
     longoBt.classList.remove("active")
-    bannerImg.setAttribute("src", "/imagens/foco.png")
 })
 
 curtoBt.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'descanso-curto')
+    switchContexto("descanso-curto")
     curtoBt.classList.add("active")
     focoBt.classList.remove("active")
     longoBt.classList.remove("active")
-    bannerImg.setAttribute("src", "/imagens/descanso-curto.png")
 })
 
 longoBt.addEventListener('click', () => {
-    html.setAttribute('data-contexto', 'descanso-longo')
+    switchContexto("descanso-longo")
     curtoBt.classList.remove("active")
     focoBt.classList.remove("active")
     longoBt.classList.add("active")
-    bannerImg.setAttribute("src", "/imagens/descanso-longo.png")
 })
