@@ -19,13 +19,17 @@ const beepAudio = new Audio("/sons/beep.mp3")
 const music = new Audio("/sons/luna-rise-part-one.mp3")
 music.loop = true
 
+const timerCard = document.querySelector(".app__card-timer")
+const focoTime = 25 * 60
+const curtoTime = 5 * 60
+const longoTime = 15 * 60
 
-let clockTime = 10
+let clockTime = 25 * 60
 let setIntervalId = null
 
 function switchContexto(contexto){ //A função esta removendo o "active de todos os botões", para depois ser colocada no botão usado.
     botoes.forEach(contexto => {  //Devo usar forEach porque se trata de um array. 
-         contexto.classList.remove("active")
+        contexto.classList.remove("active")
     });
 
     html.setAttribute('data-contexto', contexto)
@@ -34,7 +38,7 @@ function switchContexto(contexto){ //A função esta removendo o "active de todo
 
 function clock(){
     clockTime--
-    console.log(clockTime)
+    timer()
 
     if(clockTime <= 0){
         stopClock()
@@ -63,6 +67,14 @@ function stopClock(){
     startBtText.textContent = "Começar"
 }
 
+function timer(){
+    const time = new Date(clockTime * 1000)
+    const timeFormmated = time.toLocaleTimeString("pt-br", {minute: "2-digit", second: "2-digit"})
+    timerCard.innerHTML = `${timeFormmated}`
+}
+
+timer()
+
 
 inputMusic.addEventListener("change", () => {
     if(music.paused){
@@ -77,6 +89,8 @@ focoBt.addEventListener('click', () => {
     focoBt.classList.add("active")
     bannerTitle.innerHTML = `Otimize sua produtividade,<br />
           <strong class="app__title-strong">mergulhe no que importa.</strong>`
+    clockTime = focoTime
+    timer()
 })
 
 curtoBt.addEventListener('click', () => {
@@ -84,6 +98,8 @@ curtoBt.addEventListener('click', () => {
     curtoBt.classList.add("active")
     bannerTitle.innerHTML = `Que tal dar uma respirada?<br />
           <strong class="app__title-strong">Faça uma pausa curta!</strong>`
+    clockTime = curtoTime
+    timer()
 })
 
 longoBt.addEventListener('click', () => {
@@ -91,8 +107,11 @@ longoBt.addEventListener('click', () => {
     longoBt.classList.add("active")
     bannerTitle.innerHTML = `Hora de voltar à superfície.<br />
           <strong class="app__title-strong">Faça uma pausa longa.</strong>`
+    clockTime = longoTime
+    timer()
 })
 
 startBt.addEventListener("click", ()=>{
     startAndPauseClock()
+    timer()
 })
