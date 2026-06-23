@@ -4,6 +4,8 @@ const focoBt = document.querySelector(".app__card-button--foco")
 const curtoBt = document.querySelector(".app__card-button--curto")
 const longoBt = document.querySelector(".app__card-button--longo")
 const startBt = document.querySelector(".app__card-primary-button")
+const startBtText = document.querySelector(".app__card-primary-button span")
+const startBtIcon = document.querySelector(".app__card-primary-butto-icon")
 const botoes = document.querySelectorAll(".app__card-button") 
 //O querrySelectorAll pega mais de um elemnto, fazendo um array. Ou seja, a const botoes é uma array
 const inputMusic = document.querySelector(".toggle-checkbox")
@@ -36,7 +38,7 @@ function clock(){
 
     if(clockTime <= 0){
         stopClock()
-        beepAudio.play()
+        //beepAudio.play()
         clockTime = 10
     }
 }
@@ -49,12 +51,16 @@ function startAndPauseClock(){
     }
     setIntervalId = setInterval(clock, 1000)
     playAudio.play()
+    startBtIcon.setAttribute("src", "/imagens/pause.png")
+    startBtText.textContent = "Pausar"
 }
 
 
 function stopClock(){
     clearInterval(setIntervalId)
     setIntervalId = null
+    startBtIcon.setAttribute("src", "/imagens/play_arrow.png")
+    startBtText.textContent = "Começar"
 }
 
 
@@ -69,16 +75,22 @@ inputMusic.addEventListener("change", () => {
 focoBt.addEventListener('click', () => {
     switchContexto("foco")
     focoBt.classList.add("active")
+    bannerTitle.innerHTML = `Otimize sua produtividade,<br />
+          <strong class="app__title-strong">mergulhe no que importa.</strong>`
 })
 
 curtoBt.addEventListener('click', () => {
     switchContexto("descanso-curto")
     curtoBt.classList.add("active")
+    bannerTitle.innerHTML = `Que tal dar uma respirada?<br />
+          <strong class="app__title-strong">Faça uma pausa curta!</strong>`
 })
 
 longoBt.addEventListener('click', () => {
     switchContexto("descanso-longo")
     longoBt.classList.add("active")
+    bannerTitle.innerHTML = `Hora de voltar à superfície.<br />
+          <strong class="app__title-strong">Faça uma pausa longa.</strong>`
 })
 
 startBt.addEventListener("click", ()=>{
