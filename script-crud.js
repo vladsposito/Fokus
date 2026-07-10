@@ -63,6 +63,8 @@ taskCard.addEventListener("submit", (event)=>{
 
    textArea.value = ""
    //Limpa o textArea
+
+   taskCard.classList.toggle("hidden")
 })
 
 taskList.forEach(tasks => {
