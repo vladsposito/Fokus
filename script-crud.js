@@ -9,6 +9,11 @@ const taskList = JSON.parse(localStorage.getItem("taskList")) || []
 //OU, caso não tenha nada na lC, vai criar um array para receber o push
 //JSON.parse está transformando a string em array (caminho inverso)
 
+function changeTaskName(){
+    localStorage.setItem("taskList", JSON.stringify(taskList))
+
+}
+
 function createTaskElement(task){
     const li = document.createElement("li")
     li.classList.add("app__section-task-list-item")
@@ -36,8 +41,11 @@ function createTaskElement(task){
 
     button.addEventListener("click", ()=>{
         const newTaskName = prompt("Qual o novo nome da tarefa?")
-        p.textContent = newTaskName
-        
+        if(newTaskName != "" && newTaskName != null){
+           p.textContent = newTaskName
+            task.taskName = newTaskName
+            changeTaskName() 
+        }
     })
 
     button.append(img)
