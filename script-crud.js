@@ -31,6 +31,15 @@ function createTaskElement(task){
     const img = document.createElement("img")
     img.setAttribute("src", "/imagens/edit.png")
 
+
+    button.classList.add("app_button-edit")
+
+    button.addEventListener("click", ()=>{
+        const newTaskName = prompt("Qual o novo nome da tarefa?")
+        p.textContent = newTaskName
+        
+    })
+
     button.append(img)
     li.append(svg)
     li.append(p)
