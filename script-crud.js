@@ -9,7 +9,7 @@ const taskList = JSON.parse(localStorage.getItem("taskList")) || []
 //OU, caso não tenha nada na lC, vai criar um array para receber o push
 //JSON.parse está transformando a string em array (caminho inverso)
 
-function changeTaskName(){
+function refreshTaskName(){
     localStorage.setItem("taskList", JSON.stringify(taskList))
 
 }
@@ -44,7 +44,7 @@ function createTaskElement(task){
         if(newTaskName != "" && newTaskName != null){
            p.textContent = newTaskName
             task.taskName = newTaskName
-            changeTaskName() 
+            refreshTaskName() 
         }
     })
 
