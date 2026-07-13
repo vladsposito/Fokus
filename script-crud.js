@@ -3,9 +3,11 @@ const addTaskBt = document.querySelector(".app__button--add-task")
 const taskCard = document.querySelector(".app__form-add-task")
 const textArea = document.querySelector(".app__form-textarea")
 const ulTaskList = document.querySelector(".app__section-task-list")
-const activeTaskName = document.querySelector(".app__section-active-task-description")
+let activeTaskName = document.querySelector(".app__section-active-task-description")
 
 const taskList = JSON.parse(localStorage.getItem("taskList")) || []
+
+let activeTask = null
 //taskList esta recebendo os elementos da lC
 //OU, caso não tenha nada na lC, vai criar um array para receber o push
 //JSON.parse está transformando a string em array (caminho inverso)
@@ -39,19 +41,32 @@ function createTaskElement(task){
 
     button.classList.add("app_button-edit")
 
-    button.addEventListener("click", ()=>{
+    button.addEventListener("click", ()=>{       
         const newTaskName = prompt("Qual o novo nome da tarefa?")
         if(newTaskName != "" && newTaskName != null){
            p.textContent = newTaskName
             task.taskName = newTaskName
             refreshTaskName() 
-        }
+        }        
     })
 
     li.addEventListener("click", ()=>{
-        activeTaskName.textContent = task.taskName
-        li.classList.toggle("app__section-task-list-item-active")
+        document.querySelectorAll(".app__section-task-list-item-active")
+            .forEach(element => {
+            element.classList.remove("app__section-task-list-item-active")
+        }); //Removendo todos os itens selecionados antes de selecionar o proximo
 
+        if(activeTask == task){
+            activeTaskName.textContent = ""
+            activeTask = null
+            return
+        }   
+        //Validando se a task selecionada ja está selecionado
+        //Caso sim, tira tira a classe e tira ela do activeTaskName
+
+        activeTask = task
+        activeTaskName.textContent = task.taskName
+        li.classList.add("app__section-task-list-item-active")
     })
 
     button.append(img)
