@@ -3,6 +3,7 @@ const addTaskBt = document.querySelector(".app__button--add-task")
 const taskCard = document.querySelector(".app__form-add-task")
 const textArea = document.querySelector(".app__form-textarea")
 const ulTaskList = document.querySelector(".app__section-task-list")
+const activeTaskName = document.querySelector(".app__section-active-task-description")
 
 const taskList = JSON.parse(localStorage.getItem("taskList")) || []
 //taskList esta recebendo os elementos da lC
@@ -11,7 +12,6 @@ const taskList = JSON.parse(localStorage.getItem("taskList")) || []
 
 function refreshTaskName(){
     localStorage.setItem("taskList", JSON.stringify(taskList))
-
 }
 
 function createTaskElement(task){
@@ -48,6 +48,12 @@ function createTaskElement(task){
         }
     })
 
+    li.addEventListener("click", ()=>{
+        activeTaskName.textContent = task.taskName
+        li.classList.toggle("app__section-task-list-item-active")
+
+    })
+
     button.append(img)
     li.append(svg)
     li.append(p)
@@ -58,7 +64,7 @@ function createTaskElement(task){
 }
 
 addTaskBt.addEventListener("click", ()=>{
-    taskCard.classList.toggle("hidden")
+    taskCard.classList.le("hidden")
 })
 
 taskCard.addEventListener("submit", (event)=>{
