@@ -8,13 +8,14 @@ let activeTaskName = document.querySelector(".app__section-active-task-descripti
 const taskList = JSON.parse(localStorage.getItem("taskList")) || []
 
 let activeTask = null
+let liActiveTask = null
 //taskList esta recebendo os elementos da lC
 //OU, caso não tenha nada na lC, vai criar um array para receber o push
 //JSON.parse está transformando a string em array (caminho inverso)
 
 function refreshTaskName(){
     localStorage.setItem("taskList", JSON.stringify(taskList))
-}
+} //Muda nome da task na lC
 
 function createTaskElement(task){
     const li = document.createElement("li")
@@ -46,11 +47,18 @@ function createTaskElement(task){
         if(newTaskName != "" && newTaskName != null){
            p.textContent = newTaskName
             task.taskName = newTaskName
-            refreshTaskName() 
+            refreshTaskName() //Muda nome da task na lC
         }        
     })
+    
+    if(task.completed){
+        li.classList.remove("app__section-task-list-item-active")
+        li.classList.add("app__section-task-list-item-complete")
+        activeTaskName.textContent = ""
+        button.setAttribute("disabled", "disabled")
 
-    li.addEventListener("click", ()=>{
+    }else{
+        li.addEventListener("click", ()=>{
         document.querySelectorAll(".app__section-task-list-item-active")
             .forEach(element => {
             element.classList.remove("app__section-task-list-item-active")
@@ -59,15 +67,19 @@ function createTaskElement(task){
         if(activeTask == task){
             activeTaskName.textContent = ""
             activeTask = null
+            liActiveTask = null
             return
         }   
         //Validando se a task selecionada ja está selecionado
         //Caso sim, tira tira a classe e tira ela do activeTaskName
 
         activeTask = task
+        liActiveTask = li
         activeTaskName.textContent = task.taskName
         li.classList.add("app__section-task-list-item-active")
+        //Adicionando task clicada como acitve e colocando o nomde dela no activeTaskName
     })
+    }
 
     button.append(img)
     li.append(svg)
@@ -79,7 +91,7 @@ function createTaskElement(task){
 }
 
 addTaskBt.addEventListener("click", ()=>{
-    taskCard.classList.le("hidden")
+    taskCard.classList.toggle("hidden")
 })
 
 taskCard.addEventListener("submit", (event)=>{
@@ -103,6 +115,7 @@ taskCard.addEventListener("submit", (event)=>{
    //Limpa o textArea
 
    taskCard.classList.toggle("hidden")
+   //Esconde o taskCard
 })
 
 taskList.forEach(tasks => {
@@ -112,4 +125,17 @@ taskList.forEach(tasks => {
 //Lê o taskList pra ver se tem alguma task na lC
 //Se tiver, ele cria um TaskElement e adiciona na UL
 //Só funciona se tiver alguma task salva, se criar na hora não vai adicionar. 
+
+
+document.addEventListener("taskCompleted", ()=>{
+    if (activeTask && liActiveTask) {
+        liActiveTask.classList.remove("app__section-task-list-item-active")
+        liActiveTask.classList.add("app__section-task-list-item-complete")
+        activeTaskName.textContent = ""
+        liActiveTask.querySelector("button").setAttribute("disabled", "disabled")
+        activeTask.completed = true
+        refreshTaskName()
+    }
+
+})
 

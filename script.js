@@ -20,7 +20,7 @@ const music = new Audio("/sons/luna-rise-part-one.mp3")
 music.loop = true
 
 const timerCard = document.querySelector(".app__card-timer")
-const focoTime = 25 * 60
+const focoTime = 3
 const curtoTime = 5 * 60
 const longoTime = 15 * 60
 
@@ -42,6 +42,11 @@ function clock(){
 
     if(clockTime <= 0){
         stopClock()
+        const contexto = html.getAttribute("data-contexto")
+        if(contexto == "foco"){
+        const taskCompleted = new CustomEvent("taskCompleted") //criando evento taskCompleted
+        document.dispatchEvent(taskCompleted) //despachando o evento no document
+        }
         //beepAudio.play()
         clockTime = 10
     }
