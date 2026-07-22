@@ -1,11 +1,13 @@
 const addTaskBt = document.querySelector(".app__button--add-task")
+const removeCompletedTaskBt = document.querySelector("#btn-remover-concluidas")
+const removeTaskBt = document.querySelector("#btn-remover-todas")
 
 const taskCard = document.querySelector(".app__form-add-task")
 const textArea = document.querySelector(".app__form-textarea")
 const ulTaskList = document.querySelector(".app__section-task-list")
 let activeTaskName = document.querySelector(".app__section-active-task-description")
 
-const taskList = JSON.parse(localStorage.getItem("taskList")) || []
+let taskList = JSON.parse(localStorage.getItem("taskList")) || []
 
 let activeTask = null
 let liActiveTask = null
@@ -139,3 +141,28 @@ document.addEventListener("taskCompleted", ()=>{
 
 })
 
+function removeTasks(onlycompleted){ 
+    let seletor = ".app__section-task-list-item"
+    if (onlycompleted){
+        seletor = ".app__section-task-list-item-complete"
+    }
+    document.querySelectorAll(seletor)
+        .forEach(element => {
+            element.remove()
+        });
+
+    if (onlycompleted){
+        taskList = taskList.filter(task => !task.completed)
+    }else{
+        taskList = []
+    } 
+    refreshTaskName()
+}
+
+removeCompletedTaskBt.addEventListener("click", ()=>{
+    removeTasks(true)
+})
+
+removeTaskBt.addEventListener("click", ()=>{
+    removeTasks(false)
+})
