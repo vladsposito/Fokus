@@ -141,7 +141,7 @@ document.addEventListener("taskCompleted", ()=>{
 
 })
 
-const removeTasks = (onlycompleted) => { 
+function removeTasks(onlycompleted){ 
     let seletor = ".app__section-task-list-item"
     if (onlycompleted){
         seletor = ".app__section-task-list-item-complete"
